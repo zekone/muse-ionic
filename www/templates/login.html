@@ -1,0 +1,32 @@
+<ion-view title="Sign In">
+  <ion-content>
+
+
+    <div>
+      <div class="list">
+
+        <label class="item item-input item-floating-label">
+            <span class="input-label">Username</span>
+            <input ng-model="username" type="text" placeholder="Username">
+        </label>
+
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Password</span>
+          <input ng-model="password" type="password" placeholder="Password">
+        </label>
+
+
+        <div class="padding">
+          <button ng-click="login(username, password)" class="button button-block button-stable">Login</button>
+          <button ng-click="register(username, password)" class="button button-block button-dark">Register</button>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+  </ion-content>
+</ion-view>
