@@ -1,0 +1,17 @@
+<ion-view title="Home" ng-init="list()">
+
+  <ion-nav-buttons side="right">
+    <button class="right button button-icon icon ion-plus" ng-click="addItem()"></button>
+  </ion-nav-buttons>
+  <ion-content>
+
+    <ion-list>
+
+      <ion-item ng-repeat="s in playlist.songs">
+        <h2>{{s}}</h2>
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+</ion-view>

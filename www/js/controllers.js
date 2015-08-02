@@ -35,13 +35,12 @@ app.controller("LoginControl", function($scope, $firebaseAuth, $location){
 
 
 app.controller("HomeControl", function($scope, $firebaseObject, $ionicPopup){
+  var fbAuth = fb.getAuth();
+  console.log(fbAuth.uid);
   $scope.list = function(){
-    var fbAuth = fb.getAuth();
-
     if(fbAuth){
-      var sync = $firebaseObject(fb.child("users/" + fbAuth.uid));
-      // var syncObject = sync.$asObject();
-      sync.$bindTo($scope, "data");
+      var sync = $firebaseObject(fb.child("playlist/"));
+      sync.$bindTo($scope, "playlists");
     }
   };
 
@@ -51,10 +50,17 @@ app.controller("HomeControl", function($scope, $firebaseObject, $ionicPopup){
       inputType: "text",
     }).then(function(result){
       if(result !="" && result != null){
-        if($scope.data.hasOwnProperty("playlists") !== true){
-            $scope.data.playlists = [];
-        }
-        $scope.data.playlists.push({title: result});
+
+          var newPlaylist = {};
+          newPlaylist.title = result;
+          newPlaylist.songs = [];
+          newPlaylist.creator_uid = fbAuth.uid;
+          newPlaylist.creator_email = fbAuth.password.email;
+          var playlistID = Math.round(Math.random() * 10000000);
+
+          newPlaylist.id = playlistID;
+          $scope.playlists[playlistID] = newPlaylist;
+
       }
     });
   }
@@ -62,6 +68,28 @@ app.controller("HomeControl", function($scope, $firebaseObject, $ionicPopup){
 
 });
 
-app.controller("PlaylistControl", function($scope, $firebaseObject, $stateParams){
+app.controller("PlaylistControl", function($scope, $firebaseObject, $stateParams, $ionicPopup){
+  var pid = $stateParams.id;
+  $scope.list = function(){
+    var sync = $firebaseObject(fb.child("playlist/" + pid + "/songs"));
+    sync.$bindTo($scope, "playlist.songs");
 
+  }
+
+  $scope.addItem = function(){
+    $ionicPopup.prompt({
+      title: "Enter the name of a song",
+      inputType: "text"
+    }).then(function(result){
+      if(result !="" && result != null){
+          var newItem = {};
+          newItem.title = result;
+          newItem.added_by = fb.getAuth().password.email;
+          newItem.added_by_id = fb.getAuth().uid;
+          var itemID = Math.round(Math.random() * 10000000);
+          newItem.id = itemID;
+          $scope.playlist.songs[newItem] = newItem;
+      }
+    })
+  }
 });

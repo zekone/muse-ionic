@@ -6,16 +6,18 @@
   <ion-content>
 
 
-    <ion-list
+
+    <!-- <ion-list
               show-delete="true"
               show-reorder="true"
-              can-swipe="true">
-      <ion-item ng-repeat="p in data.playlists">
+              can-swipe="true"> -->
+    <ion-list>
+      <ion-item ng-repeat="p in playlists">
 
 
-        <h2>{{p.title}}</h2>
-        <p>{{item.description}}</p>
-        <ion-option-button class="button-positive"
+        <h2><a href="#/playlist/{{p.id}}">{{p.title}}</a></h2>
+        {{p}}
+        <!-- <ion-option-button class="button-positive"
                            ng-click="share(item)">
           Share
         </ion-option-button>
@@ -28,7 +30,7 @@
         </ion-delete-button>
         <ion-reorder-button class="ion-navicon"
                             on-reorder="reorderItem(item, $fromIndex, $toIndex)">
-        </ion-reorder-button>
+        </ion-reorder-button> -->
 
       </ion-item>
     </ion-list>
